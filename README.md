@@ -6,8 +6,8 @@ A `/bin/caddy` server process listens on the container's `EXPOSE`d TCP port #201
 Content should be added by binding over that path with a host volume, or by `COPY`ing/`ADD`ing files there when `docker build`ing a custom image based on this one. Adding a Caddyfile through the same mechanisms allows configuration as described in Caddy's documentation.
 
 ## Container file system:
-* `/bin/caddy` #HTTP server executable
-* `/var/www/html/` #Server's working directory and HTTP name space root
+* `/bin/caddy` # HTTP server executable
+* `/var/www/html/` # Server's working directory and HTTP name space root
 
 ### Serve a directory of static files from the docker host:
 ```
