@@ -15,7 +15,7 @@ Content should be added by binding over that path with a host volume, or by `COP
   index.html
   img/
   [...]
-% docker run -p 8080:2015 -v /home/user/site/:/var/www/html/:ro -d joshix/caddy
+% docker run -p 8080:2015 -v /home/user/site:/var/www/html:ro -d joshix/caddy
 ```
 
 ### Or build the files into an image based on this one:
@@ -33,7 +33,7 @@ Content should be added by binding over that path with a host volume, or by `COP
 % docker run -p 8080:80 -d com.mysite-caddy
 ```
 
-### This technique allows custom configs by adding a `Caddyfile` to your host volume:
+### To configure Caddy, add `Caddyfile` to the root of Caddy's HTTP name space in the same fashion:
 ```
 % ls /home/user/site
   Caddyfile
@@ -46,7 +46,5 @@ Content should be added by binding over that path with a host volume, or by `COP
   markdown /
   gzip
   [...]
-% docker run -p 8080:2015 -v /home/user/site/:/var/www/html/:ro -d joshix/caddy
+% docker run -p 8080:2015 -v /home/user/site:/var/www/html:ro -d joshix/caddy
 ```
-
-Etc.
