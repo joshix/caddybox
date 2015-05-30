@@ -30,7 +30,7 @@ Content should be added by binding over that path with a host volume, or by `COP
   FROM joshix/caddy
   COPY . /var/www/html
 % docker build -t "com.mysite-caddy" .
-% docker run -p 8080:80 -d com.mysite-caddy
+% docker run -p 8080:2015 -d com.mysite-caddy
 ```
 
 ### To configure Caddy, add `Caddyfile` to the root of Caddy's HTTP name space in the same fashion:
