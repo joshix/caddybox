@@ -1,9 +1,15 @@
 # Caddy image for Docker
 
-Without configuration, this Docker image encapsulates a [*Caddy*](http://caddyserver.com) HTTP server for static files.
-A `/bin/caddy` process listens on the container's `EXPOSE`d TCP port #2015 and attempts to fulfill requests with files beneath the container's `/var/www/html/`.
+Without configuration, this Docker image encapsulates a
+[*Caddy*](http://caddyserver.com) HTTP server for static files.
+A `/bin/caddy` process listens on the container's `EXPOSE`d TCP
+port #2015 and attempts to fulfill requests with files beneath
+the container's `/var/www/html/`.
 
-Content should be added by binding over that path with a host volume, or by `COPY`ing/`ADD`ing files there when `docker build`ing a custom image based on this one. Adding a `Caddyfile` through the same mechanisms allows configuration.
+Content should be added by binding over that path with a host volume,
+or by `COPY`ing/`ADD`ing files there when `docker build`ing a custom
+image based on this one. Adding a `Caddyfile` through the same
+mechanisms allows configuration.
 
 ## Container file system:
 * `/bin/caddy` # HTTP server executable
@@ -33,7 +39,7 @@ Content should be added by binding over that path with a host volume, or by `COP
 % docker run -p 8080:2015 -d com.mysite-caddy
 ```
 
-### To configure Caddy, add `Caddyfile` to the root of Caddy's HTTP name space in the same fashion:
+### To configure Caddy, add `Caddyfile` to the HTTP root in the same fashion:
 ```
 % ls /home/user/site
   Caddyfile
