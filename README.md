@@ -19,7 +19,7 @@ mechanisms allows configuration.
 
 There are at least two ways to provide Caddy with content and configuration.
 
-### 1. Bind a host file system path over the container's HTTP name space root:
+* Bind a host file system path over the container's HTTP name space root:
 ```
 % ls /home/user/site
   index.html
@@ -30,7 +30,7 @@ There are at least two ways to provide Caddy with content and configuration.
 
 OR,
 
-### 2. Build the files into an image based on this one:
+* Build the files into an image based on this one:
 ```
 % cd /home/user/site.build
 % ls
@@ -45,7 +45,8 @@ OR,
 % docker run -p 8080:2015 -d com.mysite-caddy
 ```
 
-### To configure Caddy, add `Caddyfile` to the HTTP root in the same fashion:
+### Configuration
+To configure Caddy, add `Caddyfile` to the HTTP root in the same fashion:
 ```
 % ls /home/user/site
   Caddyfile
