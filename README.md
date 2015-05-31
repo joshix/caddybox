@@ -15,7 +15,11 @@ mechanisms allows configuration.
 * `/bin/caddy` # HTTP server executable
 * `/var/www/html/` # Server's working directory and HTTP name space root
 
-### Serve a directory of static files from the docker host:
+## Adding Content
+
+There are at least two ways to provide Caddy with content and configuration.
+
+### 1. Bind a host file system path over the container's HTTP name space root:
 ```
 % ls /home/user/site
   index.html
@@ -24,9 +28,11 @@ mechanisms allows configuration.
 % docker run -p 8080:2015 -v /home/user/site:/var/www/html:ro -d joshix/caddy
 ```
 
-### Or build the files into an image based on this one:
+OR,
+
+### 2. Build the files into an image based on this one:
 ```
-# cd /home/user/site-buildin
+% cd /home/user/site.build
 % ls
   Dockerfile
   index.html
