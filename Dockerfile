@@ -3,5 +3,5 @@ MAINTAINER Josh Wood <j@joshix.com>
 COPY root /
 WORKDIR /var/www/html
 EXPOSE 2015
-USER nobody
+USER caddy
 CMD ["/bin/caddy"]
