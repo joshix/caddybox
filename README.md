@@ -45,7 +45,7 @@ OR,
 % docker run -p 8080:2015 -d com.mysite-caddy
 ```
 
-### Configuration
+## Configuration
 To configure Caddy, add `Caddyfile` to the HTTP root in the same fashion:
 ```
 % ls /home/user/site
@@ -60,4 +60,29 @@ To configure Caddy, add `Caddyfile` to the HTTP root in the same fashion:
   gzip
   [...]
 % docker run -p 8080:2015 -v /home/user/site:/var/www/html:ro -d joshix/caddy
+```
+
+### TLS
+To serve HTTP and HTTP2 over encrypted connections, provide certificate and key
+files and a Caddyfile naming them, something like:
+```
+% ls /home/user/site
+  html/
+  tls/
+% ls /home/user/site/html
+  Caddyfile
+  index.html
+  img/
+  [...]
+% ls /home/user/site/tls
+  site.crt
+  site.key
+% cat /home/user/site/html/Caddyfile
+  0.0.0.0:2015 {
+    redir https://site.com # Redirect any HTTP req to HTTPS
+  }
+  0.0.0.0:2378 {
+    tls ../tls/site.crt ../tls/site.key
+  }
+% docker run -p 80:2015 -p 443:2378 -v /home/user/site:/var/www:ro -d joshix/caddy
 ```
