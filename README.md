@@ -12,15 +12,16 @@ image based on this one. Adding a `Caddyfile` through the same
 mechanisms allows configuration.
 
 ## Container file system:
-* `/bin/caddy` # HTTP server executable
-* `/etc/passwd` # Names user/UID under which caddy runs
-* `/var/www/html/` # Server's working directory and HTTP name space root
+* `/bin/caddy` # Server executable
+* `/etc/passwd` # UID to run server
+* `/var/www/html/` # Server working directory and root of HTTP name space
 
 ## Adding Content
 
 There are at least two ways to provide Caddy with content and configuration.
 
 * Bind a host file system path over the container's HTTP name space root:
+
 ```
 % ls /home/user/site
   index.html
@@ -32,6 +33,7 @@ There are at least two ways to provide Caddy with content and configuration.
 OR,
 
 * Build the files into an image based on this one:
+
 ```
 % cd /home/user/site.build
 % ls
@@ -47,14 +49,15 @@ OR,
 ```
 
 ## Configuration
-To configure Caddy, add `Caddyfile` to the HTTP root in the same fashion:
+To configure Caddy, add `Caddyfile` to the server's working directory:
+
 ```
 % ls /home/user/site
   Caddyfile
   index.md
   img/
   [...]
-% cat Caddyfile
+% cat /home/user/site/Caddyfile
   0.0.0.0:2015
   ext .html .htm .md
   markdown /
@@ -64,8 +67,8 @@ To configure Caddy, add `Caddyfile` to the HTTP root in the same fashion:
 ```
 
 ### TLS
-To serve HTTP and HTTP2 over encrypted connections, provide certificate and key
-files and a Caddyfile naming them, something like:
+To serve HTTPS, add certificate and key files, with a Caddyfile naming them:
+
 ```
 % ls /home/user/site
   html/
@@ -85,5 +88,6 @@ files and a Caddyfile naming them, something like:
   0.0.0.0:2378 {
     tls ../tls/site.crt ../tls/site.key
   }
+  [...]
 % docker run -p 80:2015 -p 443:2378 -v /home/user/site:/var/www:ro -d joshix/caddy
 ```
