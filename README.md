@@ -27,7 +27,7 @@ There are at least two ways to provide Caddy with content and configuration.
   index.html
   img/
   [...]
-% docker run -p 8080:2015 -v /home/user/site:/var/www/html:ro -d joshix/caddy
+% docker run -d -p 8080:2015 -v /home/user/site:/var/www/html:ro joshix/caddy
 ```
 
 OR,
@@ -45,7 +45,7 @@ OR,
   FROM joshix/caddy
   COPY . /var/www/html
 % docker build -t "com.mysite-caddy" .
-% docker run -p 8080:2015 -d com.mysite-caddy
+% docker run -d -p 8080:2015 com.mysite-caddy
 ```
 
 ## Configuration
@@ -63,7 +63,7 @@ To configure Caddy, add `Caddyfile` to the server's working directory:
   markdown /
   gzip
   [...]
-% docker run -p 8080:2015 -v /home/user/site:/var/www/html:ro -d joshix/caddy
+% docker run -d -p 8080:2015 -v /home/user/site:/var/www/html:ro joshix/caddy
 ```
 
 ### TLS
@@ -89,5 +89,5 @@ To serve HTTPS, add certificate and key files, with a Caddyfile naming them:
     tls ../tls/site.crt ../tls/site.key
   }
   [...]
-% docker run -p 80:2015 -p 443:2378 -v /home/user/site:/var/www:ro -d joshix/caddy
+% docker run -d -p 80:2015 -p 443:2378 -v /home/user/site:/var/www:ro joshix/caddy
 ```
