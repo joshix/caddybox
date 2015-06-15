@@ -23,11 +23,11 @@ There are at least two ways to provide Caddy with content and configuration.
 * Bind a host file system path over the container's HTTP name space root:
 
 ```
-% ls /home/user/site
+% ls /home/j/caddyvol/www/html
   index.html
   img/
   [...]
-% docker run -d -p 8080:2015 -v /home/user/site:/var/www/html:ro joshix/caddy
+% docker run -d -p 8080:2015 -v /home/j/caddyvol/www:/var/www:ro joshix/caddy
 ```
 
 OR,
@@ -35,7 +35,7 @@ OR,
 * Build the files into an image based on this one:
 
 ```
-% cd /home/user/site.build
+% cd /home/j/site.build
 % ls
   Dockerfile
   index.html
@@ -52,36 +52,36 @@ OR,
 To configure Caddy, add `Caddyfile` to the server's working directory:
 
 ```
-% ls /home/user/site
+% ls /home/j/site
   Caddyfile
   index.md
   img/
   [...]
-% cat /home/user/site/Caddyfile
+% cat /home/j/site/Caddyfile
   0.0.0.0:2015
   ext .html .htm .md
   markdown /
   gzip
   [...]
-% docker run -d -p 8080:2015 -v /home/user/site:/var/www/html:ro joshix/caddy
+% docker run -d -p 8080:2015 -v /home/j/site:/var/www/html:ro joshix/caddy
 ```
 
 ### TLS
 To serve HTTPS, add certificate and key files, with a Caddyfile naming them:
 
 ```
-% ls /home/user/site
+% ls /home/j/site
   html/
   tls/
-% ls /home/user/site/html
+% ls /home/j/site/html
   Caddyfile
   index.html
   img/
   [...]
-% ls /home/user/site/tls
+% ls /home/j/site/tls
   site.crt
   site.key
-% cat /home/user/site/html/Caddyfile
+% cat /home/j/site/html/Caddyfile
   0.0.0.0:2015 {
     redir https://site.com # Redirect any HTTP req to HTTPS
   }
@@ -89,5 +89,5 @@ To serve HTTPS, add certificate and key files, with a Caddyfile naming them:
     tls ../tls/site.crt ../tls/site.key
   }
   [...]
-% docker run -d -p 80:2015 -p 443:2378 -v /home/user/site:/var/www:ro joshix/caddy
+% docker run -d -p 80:2015 -p 443:2378 -v /home/j/site:/var/www:ro joshix/caddy
 ```
