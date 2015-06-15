@@ -23,11 +23,11 @@ There are at least two ways to provide Caddy with content and configuration.
 * Bind a host file system path over the container's HTTP name space root:
 
 ```
-% ls /home/j/caddyvol/www/html
+% ls /home/j/site
   index.html
   img/
   [...]
-% docker run -d -p 8080:2015 -v /home/j/caddyvol/www:/var/www:ro joshix/caddy
+% docker run -d -p 8080:2015 -v /home/j/site:/var/www/html:ro joshix/caddy
 ```
 
 OR,
