@@ -1,8 +1,10 @@
 # Caddy image for Docker
 
+[![](https://badge.imagelayers.io/joshix/caddy:latest.svg)](https://imagelayers.io/?images=joshix/caddy:latest 'Get your own badge on imagelayers.io')
+
 Without configuration, this Docker image encapsulates a
 [*Caddy*](http://caddyserver.com) HTTP server for static files.
-A `/bin/caddy` process listens on the container's `EXPOSE`d TCP
+The server listens on the container's `EXPOSE`d TCP
 port #2015 and attempts to fulfill requests with files beneath
 the container's `/var/www/html/`.
 
