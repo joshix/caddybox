@@ -14,9 +14,10 @@ image based on this one. Adding a `Caddyfile` through the same
 mechanisms allows configuration.
 
 ## Container file system:
-* `/caddy` # Server executable
-* `/var/www/html/` # Server working directory and root of HTTP name space
-* `/var/www/html/index.html` # Default landing page
+* `/bin/caddy` - Server executable
+* `/etc/passwd` - User name `caddy` ID `22015`
+* `/var/www/html/` - Server working directory and root of HTTP name space
+* `/var/www/html/index.html` - Default landing page
 
 ## Adding Content
 
