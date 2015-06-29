@@ -13,7 +13,6 @@ mechanisms allows configuration.
 
 ## Container file system:
 * `/bin/caddy` # Server executable
-* `/etc/passwd` # UID to run server
 * `/var/www/html/` # Server working directory and root of HTTP name space
 * `/var/www/html/index.html` # Default landing page
 
