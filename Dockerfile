@@ -1,6 +1,6 @@
 FROM centurylink/ca-certs
 MAINTAINER Josh Wood <j@joshix.com>
-COPY root /
+COPY rootfs /
 EXPOSE 2015
 USER caddy
 WORKDIR /var/www/html
