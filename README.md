@@ -16,6 +16,7 @@ mechanisms allows configuration.
 ## Container file system:
 * `/bin/caddy` - Server executable
 * `/etc/passwd` - User name `caddy` ID `22015`
+* `/etc/ssl/certs/ca-certificates.crt` - Root certs FROM the *centurylink/ca-certs* image
 * `/var/www/html/` - Server working directory and root of HTTP name space
 * `/var/www/html/index.html` - Default landing page
 
