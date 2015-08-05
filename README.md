@@ -15,7 +15,6 @@ mechanisms allows configuration.
 
 ## Container file system:
 * `/bin/caddy` - Server executable
-* `/etc/ssl/certs/ca-certificates.crt` - Root certificates
 * `/var/www/html/` - Server working directory and root of HTTP name space
 * `/var/www/html/index.html` - Default landing page
 
