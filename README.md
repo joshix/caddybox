@@ -25,7 +25,6 @@ allows configuration of the web server and sites as described in the
 * `/var/www/html/index.html` - Default landing page
 
 ## Adding Content
-
 There are at least two ways to provide Caddy with content and configuration.
 
 * Bind a host file system path over the container's HTTP name space root:
