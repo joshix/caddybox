@@ -3,16 +3,11 @@
 [![](https://badge.imagelayers.io/joshix/caddy:latest.svg)](https://imagelayers.io/?images=joshix/caddy:latest 'Get your own badge on imagelayers.io')
 
 This Docker image encapsulates a [*Caddy*](https://caddyserver.com)
-HTTP server. It intends to be minimal, so it is built `FROM` the
+HTTP server. It is built `FROM` the
 [*scratch* image](https://hub.docker.com/_/scratch/) and executes
-a single statically-linked binary.  It intends to be a drop-in
-replacement for the role in tutorials often filled by the official
-[*nginx* image](https://hub.docker.com/_/nginx/), so it includes a
-tiny `index.html` default landing page, and can be demonstrated
-without configuration on any docker host by invoking e.g.,
-`docker run -d -P joshix/caddy`. It intends to be readily extended,
-configured, and used as a `FROM` base image, so it stores its two
-files at conventional paths.
+a single statically-linked binary. It includes a tiny `index.html`
+landing page so that it can be demonstrated without configuration
+on any docker host by invoking e.g., `docker run -d -P joshix/caddy`.
 
 The server listens on the container's `EXPOSE`d TCP
 port #2015 and attempts to fulfill requests with files beneath
