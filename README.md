@@ -7,7 +7,7 @@ HTTP server. It is built `FROM` the
 [*scratch* image](https://hub.docker.com/_/scratch/) and executes
 a single statically-linked binary. It includes a tiny `index.html`
 landing page so that it can be demonstrated without configuration
-on any docker host by invoking e.g., `docker run -d -P joshix/caddy`.
+on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
 
 The server listens on the container's `EXPOSE`d TCP
 port #2015 and attempts to fulfill requests with files beneath
@@ -21,6 +21,7 @@ allows configuration of the web server and sites as described in the
 
 ## Container file system:
 * `/bin/caddy` - Server executable
+* `/etc/ssl/certs/ca-certificates.crt` - Certificate Authority certificates
 * `/var/www/html/` - Server working directory and root of HTTP name space
 * `/var/www/html/index.html` - Default landing page
 
