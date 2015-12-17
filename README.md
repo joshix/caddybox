@@ -7,7 +7,7 @@ HTTP server. It is built `FROM` the
 [*scratch* image](https://hub.docker.com/_/scratch/) and executes
 a single statically-linked binary. It includes a tiny `index.html`
 landing page so that it can be demonstrated without configuration
-on any docker host by invoking e.g., `docker run -d -P joshix/caddy`.
+on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
 
 The server listens on the container's `EXPOSE`d TCP
 port #2015 and attempts to fulfill requests with files beneath
@@ -21,6 +21,7 @@ allows configuration of the web server and sites as described in the
 
 ## Container file system:
 * `/bin/caddy` - Server executable
+* `/etc/ssl/certs/ca-certificates.crt` - Certificate Authority certificates
 * `/var/www/html/` - Server working directory and root of HTTP name space
 * `/var/www/html/index.html` - Default landing page
 
@@ -73,7 +74,8 @@ To configure Caddy, add `Caddyfile` to the server's working directory:
 % docker run -d -p 8080:2015 -v /home/j/site:/var/www/html:ro joshix/caddy
 ```
 
-### TLS
+### Manual TLS
+
 To serve HTTPS, add certificate and key files, with a Caddyfile naming them:
 
 ```
@@ -97,4 +99,40 @@ To serve HTTPS, add certificate and key files, with a Caddyfile naming them:
   }
   [...]
 % docker run -d -p 80:2015 -p 443:2378 -v /home/j/site:/var/www:ro joshix/caddy
+```
+
+### Automatic Let's Encrypt TLS
+
+#### Caddyfile required
+
+Create a Caddyfile specifying, at minimum, a domain name resolving to the
+docker host that will arrange for such traffic to be handled by the running
+caddybox container, and the email address for registration with letsencrypt.
+
+```sh
+$ ls /home/j/site
+Caddyfile
+index.html
+$ cat /home/j/site/Caddyfile
+lecaddybox.wood-racing.com
+  tls j@joshix.com
+$ docker run --name com.wood-racing.lecaddybox -d \
+-p 80:80 -p 443:443 \
+-v /home/j/site:/var/www/html:ro \
+-v /home/j/dotcaddy:/.caddy:rw \
+joshix/caddy:le
+```
+
+#### Persisting
+
+ Certificates, keys, and configuration generated in the letsencrypt exchange
+ are written to files beneath the container’s `/.caddy/letsencrypt/`. The
+ example above arranges for that path to be a Docker *volume*, backing the
+ container's `/.caddy/` directory with a host directory, `/home/j/dotcaddy/`.
+
+Alternatively, the letsencrypt artifacts can be copied out of the container
+file system with the `docker cp` command, e.g.:
+
+```sh
+$ docker cp com.wood-racing.lecaddybox:/.caddy /backup/dotcaddy
 ```
