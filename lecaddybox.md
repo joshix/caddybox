@@ -3,9 +3,11 @@
 This is a temporary supplement to the [README](README.md), for eventual incorporation there.
 
 ## Pro
+
 * Simple HTTPS in a container
 
 ## Con
+
 * `/bin/caddy` now runs as `EUID O` (root) in the container
 
   Caddy must bind low ports to most simply do TLS. `set_cap` is not simple (possible?) to reflect into the container.
@@ -34,7 +36,7 @@ joshix/caddy:le
 
  Certificates, keys, and configuration generated in the letsencrypt exchange are written to files beneath the container’s `/.caddy/letsencrypt/`. The example above arranges for that path to be a Docker *volume*, backing the container's `/.caddy/` directory with a host directory, `/home/j/dotcaddy/`.
 
-They can be copied out of the container file system with the `docker cp` command, e.g.:
+Alternatively, the letsencrypt artifacts can be copied out of the container file system with the `docker cp` command, e.g.:
 
 ```sh
 $ docker cp com.wood-racing.lecaddybox:/.caddy /backup/dotcaddy
