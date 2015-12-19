@@ -5,9 +5,11 @@
 This Docker image encapsulates a [*Caddy*](https://caddyserver.com)
 HTTP server. It is built `FROM` the
 [*scratch* image](https://hub.docker.com/_/scratch/) and executes
-a single statically-linked binary. It includes a tiny `index.html`
-landing page so that it can be demonstrated without configuration
-on any docker host by invoking e.g., `docker run -d -P joshix/caddy`.
+a single statically-linked binary absent any
+[*Addon* extensions](https://github.com/mholt/caddy/wiki/Extending-Caddy).
+It includes a tiny `index.html` landing page so that it can be
+demonstrated without configuration on any docker host by invoking
+e.g., `docker run -d -P joshix/caddy`.
 
 The server listens on the container's `EXPOSE`d TCP
 port #2015 and attempts to fulfill requests with files beneath
