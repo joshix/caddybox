@@ -37,5 +37,5 @@ joshix/caddy:le
 They can be copied out of the container file system with the `docker cp` command, e.g.:
 
 ```sh
-$ docker cp com.wood-racing.lecaddybox:/.caddy/letsencrypt /backup/letsencrypt
+$ docker cp com.wood-racing.lecaddybox:/.caddy /backup/dotcaddy
 ```
