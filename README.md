@@ -112,7 +112,7 @@ $ docker run --name com.wood-racing.lecaddybox -d \
 -p 80:80 -p 443:443 \
 -v /home/j/site:/var/www/html:ro \
 -v /home/j/dotcaddy:/.caddy:rw \
-joshix/caddy:le
+joshix/caddy
 ```
 
 #### Persisting
