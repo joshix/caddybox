@@ -1,6 +1,6 @@
 # Caddy Image for Docker
 
-[![](https://badge.imagelayers.io/joshix/caddy:latest.svg)](https://imagelayers.io/?images=joshix/caddy:latest 'Get your own badge on imagelayers.io')
+[![](https://badge.imagelayers.io/joshix/caddy:latest.svg)][imglayers]
 
 This Docker image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked binary absent any [*Addon* extensions][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
 
@@ -22,11 +22,11 @@ There are at least two ways to provide Caddy with content and configuration.
 * Bind a host file system path over the container's HTTP name space root:
 
 ```
-% ls /home/j/site
+$ ls /home/j/site
   index.html
   img/
   [...]
-% docker run -d -p 8080:2015 -v /home/j/site:/var/www/html:ro joshix/caddy
+$ docker run -d -p 8080:2015 -v /home/j/site:/var/www/html:ro joshix/caddy
 ```
 
 OR,
@@ -34,17 +34,17 @@ OR,
 * Build the files into an image based on this one:
 
 ```
-% cd /home/j/site.build
-% ls
+$ cd /home/j/site.build
+$ ls
   Dockerfile
   index.html
   img/logo.png
   [...]
-% cat Dockerfile
+$ cat Dockerfile
   FROM joshix/caddy
   COPY . /var/www/html
-% docker build -t "com.mysite-caddy" .
-% docker run -d -p 8080:2015 com.mysite-caddy
+$ docker build -t "com.mysite-caddy" .
+$ docker run -d -p 8080:2015 com.mysite-caddy
 ```
 
 ## Configuration
@@ -52,18 +52,18 @@ OR,
 To configure Caddy, add `Caddyfile` to the server's working directory:
 
 ```
-% ls /home/j/site
+$ ls /home/j/site
   Caddyfile
   index.md
   img/
   [...]
-% cat /home/j/site/Caddyfile
+$ cat /home/j/site/Caddyfile
   0.0.0.0:2015
   ext .html .htm .md
   markdown /
   gzip
   [...]
-% docker run -d -p 8080:2015 -v /home/j/site:/var/www/html:ro joshix/caddy
+$ docker run -d -p 8080:2015 -v /home/j/site:/var/www/html:ro joshix/caddy
 ```
 
 ### Manual TLS
@@ -71,18 +71,18 @@ To configure Caddy, add `Caddyfile` to the server's working directory:
 To serve HTTPS, add certificate and key files, with a Caddyfile naming them:
 
 ```
-% ls /home/j/site
+$ ls /home/j/site
   html/
   tls/
-% ls /home/j/site/html
+$ ls /home/j/site/html
   Caddyfile
   index.html
   img/
   [...]
-% ls /home/j/site/tls
+$ ls /home/j/site/tls
   site.crt
   site.key
-% cat /home/j/site/html/Caddyfile
+$ cat /home/j/site/html/Caddyfile
   0.0.0.0:2015 {
     redir https://site.com # Redirect any HTTP req to HTTPS
   }
@@ -90,7 +90,7 @@ To serve HTTPS, add certificate and key files, with a Caddyfile naming them:
     tls ../tls/site.crt ../tls/site.key
   }
   [...]
-% docker run -d -p 80:2015 -p 443:2378 -v /home/j/site:/var/www:ro joshix/caddy
+$ docker run -d -p 80:2015 -p 443:2378 -v /home/j/site:/var/www:ro joshix/caddy
 ```
 
 ### Automatic *Let's Encrypt* TLS
@@ -130,4 +130,5 @@ $ docker cp com.wood-racing.lecaddybox:/.caddy /backup/dotcaddy
 [caddy]: https://caddyserver.com
 [caddyautotls]: https://caddyserver.com/docs/automatic-https
 [caddydocs]: https://caddyserver.com/docs
+[imglayers]: https://imagelayers.io/?images=joshix/caddy:latest "Get your own badge on imagelayers.io"
 [scratchimg]: https://hub.docker.com/_/scratch/
