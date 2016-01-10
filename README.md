@@ -1,5 +1,7 @@
 # Caddy Image for Docker
 
+[![Docker Repository on Quay](https://quay.io/repository/josh_wood/caddy/status "Docker Repository on Quay")](https://quay.io/repository/josh_wood/caddy)
+
 [![](https://badge.imagelayers.io/joshix/caddy:latest.svg)][imglayers]
 
 This Docker image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked binary absent any [*Addon* extensions][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
