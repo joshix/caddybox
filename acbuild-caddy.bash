@@ -26,4 +26,4 @@ acbuild --debug port add http-alt tcp 2015
 acbuild --debug set-exec -- /bin/caddy -root /var/www/html
 
 # Save the ACI
-acbuild --debug write --overwrite caddy-v0.8.0-linux-amd64.aci
+acbuild --debug write --overwrite caddy-v0.8.1-linux-amd64.aci
