@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-# Start the build with an empty ACI
+# Start the build with the caddybox root file system.
 acbuild --debug begin ./rootfs
 
 # In the event of the script exiting, end the build
@@ -14,13 +14,14 @@ trap acbuildEnd EXIT
 # Name the ACI
 acbuild --debug set-name joshix.com/caddy
 
-# Add a ports for HTTP(S) traffic, Caddy default
+# Add ports for HTTP, HTTPS, and Caddy's default unprivileged port.
 acbuild --debug port add http tcp 80
 acbuild --debug port add https tcp 443
 acbuild --debug port add http-alt tcp 2015
 
-# Add a mount point for files to serve
-acbuild --debug mount add html /var/www/html
+# Add mount points in the container for html files, the let's encrypt
+# key store, and a name resolver configuration.
+#acbuild --debug mount add html /var/www/html
 acbuild --debug mount add dotcaddy /root/.caddy
 acbuild --debug mount add resolv /etc/resolv.conf
 
