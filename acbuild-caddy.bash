@@ -20,7 +20,9 @@ acbuild --debug port add https tcp 443
 acbuild --debug port add http-alt tcp 2015
 
 # Add a mount point for files to serve
-#acbuild --debug mount add html /var/www/html
+acbuild --debug mount add html /var/www/html
+acbuild --debug mount add dotcaddy /.caddy
+acbuild --debug mount add resolv /etc/resolv.conf
 
 # How to execute caddy
 acbuild --debug set-exec -- /bin/caddy -root /var/www/html
