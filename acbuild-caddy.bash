@@ -25,7 +25,7 @@ acbuild --debug mount add dotcaddy /.caddy
 acbuild --debug mount add resolv /etc/resolv.conf
 
 # How to execute caddy
-acbuild --debug set-exec -- /bin/caddy -root /var/www/html
+acbuild --debug set-exec -- /bin/caddy -root /var/www/html -conf /var/www/html/Caddyfile
 
 # Save the ACI
 acbuild --debug write --overwrite caddy-v0.8.1-linux-amd64.aci
