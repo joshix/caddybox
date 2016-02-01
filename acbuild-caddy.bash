@@ -21,12 +21,13 @@ acbuild --debug port add http-alt tcp 2015
 
 # Add mount points in the container for html files, the let's encrypt
 # key store, and a name resolver configuration.
-#acbuild --debug mount add html /var/www/html
+acbuild --debug mount add caddyfile /etc/Caddyfile
+acbuild --debug mount add html /var/www/html
 acbuild --debug mount add dotcaddy /root/.caddy
 acbuild --debug mount add resolv /etc/resolv.conf
 
 # How to execute caddy
-acbuild --debug set-exec -- /bin/caddy -root /var/www/html -conf /var/www/html/Caddyfile
+acbuild --debug set-exec -- /bin/caddy -conf /etc/Caddyfile
 
 # Save the ACI
 acbuild --debug write --overwrite caddy-v0.8.1-linux-amd64.aci
