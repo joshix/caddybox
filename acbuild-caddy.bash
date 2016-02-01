@@ -26,7 +26,7 @@ acbuild --debug port add http-alt tcp 2015
 # empty volume mount for dotcaddy, and no name resolution in the container.
 # To serve a real site, provide volumes for all four of these, and mount
 # the first two.
-acbuild --debug mount add caddyfile /Caddyfile
+#acbuild --debug mount add caddyfile /Caddyfile
 #acbuild --debug mount add html /var/www/html
 acbuild --debug mount add dotcaddy /root/.caddy
 acbuild --debug mount add resolv /etc/resolv.conf
