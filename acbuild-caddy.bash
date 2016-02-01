@@ -21,7 +21,7 @@ acbuild --debug port add http-alt tcp 2015
 
 # Add mount points in the container for html files, the let's encrypt
 # key store, and a name resolver configuration.
-# Simple case: 'rkt run --net=host' and you will serve the included
+# Simple case: 'rkt run --net=host caddy.aci' and you will serve the included
 # default index.html over port 2015. No https, no keys to lose in the
 # empty volume mount for dotcaddy, and no name resolution in the container.
 # To serve a real site, provide volumes for all four of these, and mount
