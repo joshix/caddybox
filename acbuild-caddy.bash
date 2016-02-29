@@ -26,12 +26,11 @@ acbuild --debug port add http-alt tcp 2015
 # will serve the included default index.html over port 2015. No https, no
 # keys to lose in the empty volume mount for dotcaddy, and no name resolution
 # in the container.
-# To serve a real site, provide volumes for all four of these, and provide
-# mounts for the first two.
+# To serve a real site, provide volumes for all three of these to rkt run,
+# and provide mounts for the first two. Add --dns options for name resolution.
 #acbuild --debug mount add caddyfile /Caddyfile
 #acbuild --debug mount add html /var/www/html
 acbuild --debug mount add dotcaddy /root/.caddy
-acbuild --debug mount add resolv /etc/resolv.conf
 
 # How to execute caddy
 acbuild --debug set-exec -- /bin/caddy -root /var/www/html
