@@ -36,4 +36,4 @@ acbuild --debug mount add dotcaddy /root/.caddy
 acbuild --debug set-exec -- /bin/caddy -root /var/www/html
 
 # Save the ACI
-acbuild --debug write --overwrite caddy-v0.8.2-linux-amd64.aci
+acbuild --debug write --overwrite caddy-v0.8.3-linux-amd64.aci
