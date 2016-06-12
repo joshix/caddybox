@@ -1,10 +1,16 @@
-# Caddy Image for Docker
+# Caddy App Container Image (ACI) ~~for Docker~~
 
 [![Docker Repository on Quay](https://quay.io/repository/josh_wood/caddy/status "Docker Repository on Quay")](https://quay.io/repository/josh_wood/caddy)
 
 [![](https://badge.imagelayers.io/joshix/caddy:latest.svg)][imglayers]
 
-This Docker image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked binary absent any [*Addon* extensions][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
+
+***This branch builds the caddybox App Container Image. See the [master branch][caddybox-master] for the Docker container.***
+
+*This document is specific to the Docker image, and applies only generally to the ACI generated from this branch.*
+
+
+This ~~Docker~~ App Container Image (ACI) encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked binary absent any [*Addon* extensions][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
 
 The server listens on the container's `EXPOSE`d TCP port #2015 and attempts to fulfill requests with files beneath the container's `/var/www/html/`.
 
@@ -131,6 +137,7 @@ $ docker cp com.wood-racing.lecaddybox:/.caddy /backup/dotcaddy
 [caddons]: https://github.com/mholt/caddy/wiki/Extending-Caddy
 [caddy]: https://caddyserver.com
 [caddyautotls]: https://caddyserver.com/docs/automatic-https
+[caddybox-master]: https://github.com/joshix/caddybox
 [caddydocs]: https://caddyserver.com/docs
 [imglayers]: https://imagelayers.io/?images=joshix/caddy:latest "Get your own badge on imagelayers.io"
 [scratchimg]: https://hub.docker.com/_/scratch/
