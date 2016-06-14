@@ -15,15 +15,20 @@ Caddy does know its working directory from the Dockerfile, so we don't mount a
 `/Caddyfile` -- dropping it in the volume that gets mounted at `/var/www/html`
 inside the container is sufficient.
 
+`caddy` has cwd `/var/www/html` in the Docker container; cwd `/` in the ACI.
+Note different mount targets for `Caddyfile` for the two different containers.
+
 ```sh
-sudo rkt run \
---port=80-tcp:80 --port=443-tcp:443 \
+sudo systemd-run --slice=machine \
+rkt run --insecure-options=image \
+--port=80-tcp:80 --port=443-tcp:443 --port=2015-tcp:2015 \
 --dns 8.8.8.8 --dns 8.8.4.4 \
---volume html,kind=host,source=/home/core/jxsite/public,readOnly=true \
+--volume html,kind=host,source=/home/core/jxsite/public,readOnly=false \
 --mount volume=html,target=/var/www/html \
 --volume dotcaddy,kind=host,source=/home/core/dotcaddy,readOnly=false \
 --mount volume=dotcaddy,target=/root/.caddy \
-quay.io/josh_wood/caddy:0.8.3
+--volume caddyfile,kind=host,source=/home/core/jxsite/Caddyfile,readOnly=true \
+--mount volume=caddyfile,target=/var/www/html/Caddyfile docker://quay.io/josh_wood/caddy:0.8.3
 ```
 
 ## Running ACI from file
