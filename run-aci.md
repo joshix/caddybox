@@ -16,7 +16,7 @@ Caddy does know its working directory from the Dockerfile, so we don't mount a
 inside the container is sufficient.
 
 ```sh
-sudo rkt run --net=host \
+sudo rkt run \
 --port=80-tcp:80 --port=443-tcp:443 \
 --dns 8.8.8.8 --dns 8.8.4.4 \
 --volume html,kind=host,source=/home/core/jxsite/public,readOnly=true \
