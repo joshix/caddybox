@@ -1,20 +1,19 @@
 # Running this Caddtainer with rkt
 
-In lieu of documentation...
-
-See also `joshix/jxnu/jxnu-aci.service` systemd unit that runs my site container.
+See also [`joshix/jxnu/jxnu-aci.service` systemd unit][jxnu-aci-unit] that runs
+my site container.
 
 ## Caddybox ACI from Quay.io registry
 
-With the converted Docker image pulled from Quay, we don't have named
-ports to map, so we used to 'net=host'. However, [rkt gives a conventional
-name to Docker EXPOSEd ports][1].
+With the converted Docker image pulled from Quay, we don't have named ports to
+map, so we used to 'net=host'. However, [rkt gives a conventional name to Docker
+EXPOSEd ports][rkt-run-doc].
 
 Similarly, the container's mount points aren't labeled, so we provide both the
 `volume` the host is serving and the `mount` target for it inside the container.
-Caddy does know its working directory from the Dockerfile, so we don't
-mount a `/Caddyfile` -- dropping it in the volume that gets mounted at
-`/var/www/html` inside the container is sufficient.
+Caddy does know its working directory from the Dockerfile, so we don't mount a
+`/Caddyfile` -- dropping it in the volume that gets mounted at `/var/www/html`
+inside the container is sufficient.
 
 ```sh
 sudo rkt run --net=host \
@@ -41,17 +40,18 @@ caddy-v0.8.3-linux-amd64.aci
 
 ### Serving an https site from an html volumes
 
-The caddybox ACI names three ports, so we can map just some set of those and not give access to
-the entire host network namespace.
+The caddybox ACI names three ports, so we can map just some set
+of those and not give access to the entire host network namespace.
 
-Similarly, we can name just the 'volumes'
-the host supplies, because some of the mount points inside the container are
-enumerated in the aci manifest.
-EXCEPT the `caddyfile` mount, which does not exist in the ACI, but
-can be bound to `/Caddyfile` there, where caddy will read it because
-caddy's `cwd` is `/` in the container.
-EXCEPT the `html` mount, which is not named in the ACI, because the aci
-contains a default `/var/www/html/index.html`.
+Similarly, we can name just the *volumes* the host supplies,
+because some of the mount points inside the container are
+enumerated in the ACI.  
+**Except** the `caddyfile` mount, which does not exist in
+the ACI, but can be bound to `/Caddyfile` there, where caddy
+will read it because caddy's working directory is `/` in the
+container.  
+**Except** the `html` mount, which is not named in the ACI,
+because the aci contains a default `/var/www/html/index.html`.
 
 ```sh
 sudo rkt run --insecure-options=image \
@@ -65,4 +65,6 @@ sudo rkt run --insecure-options=image \
 caddy-v0.8.3-linux-amd64.aci
 ```
 
-[1]: https://github.com/coreos/rkt/commit/443073354c7d2bb40a3f69d520f4f45f69f2f31d
+
+[jxnu-aci-unit]: https://github.com/joshix/jxnu/blob/master/jxnu-aci.service
+[rkt-run-doc]: https://github.com/coreos/rkt/commit/443073354c7d2bb40a3f69d520f4f45f69f2f31d
