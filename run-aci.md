@@ -1,21 +1,21 @@
-# Running this Caddtainer with rkt
+# Running caddybox with rkt
 
-See also [`joshix/jxnu/jxnu-aci.service` systemd unit][jxnu-aci-unit] that runs
-my site container.
+See also the [`jxnu-aci.service` systemd unit][jxnu-aci-unit] that runs
+the joshix.com site container, and [`caddy-rkt.service`][caddy-rkt-unit], the unit that runs the testbed caddybox at jxnu.joshix.com.
 
-## Caddybox ACI from Quay.io registry
+## Caddybox Docker image from container registry
 
 With the converted Docker image pulled from Quay, we don't have named ports to
-map, so we used to 'net=host'. However, [rkt gives a conventional name to Docker
-EXPOSEd ports][rkt-run-doc].
+map, so we once gave the 'net=host' option. However, [rkt gives a conventional
+name to Docker EXPOSEd ports][rkt-docker-expose].
 
 Similarly, the container's mount points aren't labeled, so we provide both the
 `volume` the host is serving and the `mount` target for it inside the container.
-Caddy does know its working directory from the Dockerfile, so we don't mount a
-`/Caddyfile` -- dropping it in the volume that gets mounted at `/var/www/html`
-inside the container is sufficient.
+Caddy does know its working directory from the Dockerfile, so we don't have to
+mount a `/Caddyfile` -- dropping it in the volume that gets mounted at
+`/var/www/html` inside the container is sufficient.
 
-`caddy` has cwd `/var/www/html` in the Docker container; cwd `/` in the ACI.
+Note: `caddy` has the working directory `/var/www/html` inside this converted Docker container; but working directory `/` inside the ACI.
 Note different mount targets for `Caddyfile` for the two different containers.
 
 ```sh
@@ -23,15 +23,14 @@ sudo systemd-run --slice=machine \
 rkt run --insecure-options=image \
 --port=80-tcp:80 --port=443-tcp:443 --port=2015-tcp:2015 \
 --dns 8.8.8.8 --dns 8.8.4.4 \
---volume html,kind=host,source=/home/core/jxsite/public,readOnly=false \
+--volume html,kind=host,source=/home/core/web/public,readOnly=true \
 --mount volume=html,target=/var/www/html \
 --volume dotcaddy,kind=host,source=/home/core/dotcaddy,readOnly=false \
 --mount volume=dotcaddy,target=/root/.caddy \
---volume caddyfile,kind=host,source=/home/core/jxsite/Caddyfile,readOnly=true \
---mount volume=caddyfile,target=/var/www/html/Caddyfile docker://quay.io/josh_wood/caddy:0.8.3
+docker://quay.io/josh_wood/caddy:0.8.3
 ```
 
-## Running ACI from file
+## Caddybox ACI from file
 
 ### Basic rkt run
 
@@ -43,7 +42,7 @@ sudo rkt run --insecure-options=image --port http-alt:32768 \
 caddy-v0.8.3-linux-amd64.aci
 ```
 
-### Serving an https site from an html volumes
+### Serving an https site from an html volume
 
 The caddybox ACI names three ports, so we can map just some set
 of those and not give access to the entire host network namespace.
@@ -62,14 +61,15 @@ because the aci contains a default `/var/www/html/index.html`.
 sudo rkt run --insecure-options=image \
 --port http:80 --port https:443 [--port http-alt:2015] \
 --dns 8.8.8.8 --dns 8.8.4.4 \
---volume caddyfile,kind=host,source=$HOME/jxsite/Caddyfile,readOnly=true \
+--volume caddyfile,kind=host,source=/home/core/web/Caddyfile,readOnly=true \
 --mount volume=caddyfile,target=/Caddyfile \
---volume html,kind=host,source=$HOME/jxsite/public,readOnly=true \
+--volume html,kind=host,source=/home/core/web/public,readOnly=true \
 --mount volume=html,target=/var/www/html \
---volume dotcaddy,kind=host,source=$HOME/dotcaddy,readOnly=false \
+--volume dotcaddy,kind=host,source=/home/core/dotcaddy,readOnly=false \
 caddy-v0.8.3-linux-amd64.aci
 ```
 
 
+[caddy-rktdock-unit]: https://github.com/joshix/caddybox/blob/unit/caddy-rkt.service
 [jxnu-aci-unit]: https://github.com/joshix/jxnu/blob/master/jxnu-aci.service
-[rkt-run-doc]: https://github.com/coreos/rkt/commit/443073354c7d2bb40a3f69d520f4f45f69f2f31d
+[rkt-docker-expose]: https://github.com/coreos/rkt/commit/443073354c7d2bb40a3f69d520f4f45f69f2f31d
