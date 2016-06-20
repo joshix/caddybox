@@ -1,10 +1,10 @@
-# Caddy Image for Docker
+# Caddy App Container Image (ACI) ~~for Docker~~
 
 [![Docker Repository on Quay](https://quay.io/repository/josh_wood/caddy/status "Docker Repository on Quay")](https://quay.io/repository/josh_wood/caddy)
 
 [![](https://badge.imagelayers.io/joshix/caddy:latest.svg)][imglayers]
 
-This Docker image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked binary absent any [*Addon* extensions][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
+This container image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked binary absent any [*Addon* extensions][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
 
 The server listens on the container's `EXPOSE`d TCP port #2015 and attempts to fulfill requests with files beneath the container's `/var/www/html/`.
 
