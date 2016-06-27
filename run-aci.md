@@ -27,7 +27,7 @@ rkt run --insecure-options=image \
 --mount volume=html,target=/var/www/html \
 --volume dotcaddy,kind=host,source=/home/core/dotcaddy,readOnly=false \
 --mount volume=dotcaddy,target=/root/.caddy \
-docker://quay.io/josh_wood/caddy:0.8.3
+docker://quay.io/josh_wood/caddy:0.9-beta.2
 ```
 
 ## Caddybox ACI from file
@@ -39,7 +39,7 @@ container port 2015 `http-alt`.
 
 ```sh
 sudo rkt run --insecure-options=image --port http-alt:32768 \
-caddy-v0.8.3-linux-amd64.aci
+caddy-v0.9-beta.2-linux-amd64.aci
 ```
 
 ### Serving an https site from an html volume
@@ -66,7 +66,7 @@ sudo rkt run --insecure-options=image \
 --volume html,kind=host,source=/home/core/web/public,readOnly=true \
 --mount volume=html,target=/var/www/html \
 --volume dotcaddy,kind=host,source=/home/core/dotcaddy,readOnly=false \
-caddy-v0.8.3-linux-amd64.aci
+caddy-v0.9-beta.2-linux-amd64.aci
 ```
 
 
