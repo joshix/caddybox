@@ -1,7 +1,7 @@
 [Unit]
 # Metadata
-Description=Run caddybox Docker container under rkt
-Documentation=https://jxnu.joshix.com/2016/01/23/migration-brief/
+Description=Web server: Caddybox Docker container under rkt
+Documentation=https://github.com/joshix/caddybox
 # Wait for networking
 Requires=network-online.target
 After=network-online.target
