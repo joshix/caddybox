@@ -2,7 +2,7 @@
 
 [![Docker Repository on Quay](https://quay.io/repository/josh_wood/caddy/status "Docker Repository on Quay")](https://quay.io/repository/josh_wood/caddy)
 
-[![](https://badge.imagelayers.io/joshix/caddy:latest.svg)][imglayers]
+[![](https://images.microbadger.com/badges/image/joshix/caddy.svg)][microbadger]
 
 This container image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked binary absent any [*Addon* extensions][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
 
@@ -134,5 +134,5 @@ $ docker cp com.wood-racing.lecaddybox:/.caddy /backup/dotcaddy
 [caddy]: https://caddyserver.com
 [caddyautotls]: https://caddyserver.com/docs/automatic-https
 [caddydocs]: https://caddyserver.com/docs
-[imglayers]: https://imagelayers.io/?images=joshix/caddy:latest "Get your own badge on imagelayers.io"
+[microbadger]: https://microbadger.com/images/joshix/caddy "Get your own image badge on microbadger.com"
 [scratchimg]: https://hub.docker.com/_/scratch/
