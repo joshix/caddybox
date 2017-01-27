@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ACI=caddy-v0.9.1-linux-amd64.aci
+ACI=caddy-v0.9.5-linux-amd64.aci
 SSH=core@jxnu.joshix.com
 
 scp -i $GOPATH/src/github.com/joshix/acbuild/.vagrant/machines/default/virtualbox/private_key -P 2222 \
