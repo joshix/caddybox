@@ -6,8 +6,6 @@
 
 This container image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked binary absent any [*Addon* extensions][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
 
-This directory includes scripts to produce both Docker and ACI container images.
-
 The server listens on the container's `EXPOSE`d TCP port #2015 and attempts to fulfill requests with files beneath the container's `/var/www/html/`.
 
 Content should be added by binding over that path with a host volume, or by `COPY`ing/`ADD`ing files there when `docker build`ing an image based on this one. Adding a `Caddyfile` through the same mechanisms allows configuration of the web server and sites as described in the [Caddy documentation][caddydocs].
