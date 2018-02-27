@@ -26,10 +26,10 @@ rkt run --insecure-options=image \
 --mount volume=html,target=/var/www/html \
 --volume dotcaddy,kind=host,source=/home/core/dotcaddy,readOnly=false \
 --mount volume=dotcaddy,target=/root/.caddy \
-docker://quay.io/josh_wood/caddy:v0.10.10
+docker://quay.io/joshix/caddy:v0.10.11
 ```
 
 
 [caddy-rkt-unit]: caddy-rkt.service
-[jxnu-unit]: https://github.com/joshix/jxnu/blob/master/jxnu.service
+[jxnu-unit]: https://github.com/joshix/jxnu/blob/0ad6717bee2db53e7cb501c92620be961772ca63/jxnu.service
 [rkt-docker-expose]: https://github.com/coreos/rkt/commit/443073354c7d2bb40a3f69d520f4f45f69f2f31d
