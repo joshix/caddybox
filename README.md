@@ -1,6 +1,6 @@
 # Caddy container image
 
-[![Docker Repository on Quay](https://quay.io/repository/josh_wood/caddy/status "Docker Repository on Quay")](https://quay.io/repository/josh_wood/caddy)
+[![Docker Repository on Quay](https://quay.io/repository/joshix/caddy/status "Docker Repository on Quay")](https://quay.io/repository/joshix/caddy)
 
 [![](https://images.microbadger.com/badges/image/joshix/caddy.svg)][microbadger]
 
