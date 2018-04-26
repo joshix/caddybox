@@ -2,7 +2,7 @@
 
 # Builds caddy binary for caddybox rootfs using caddy's build.go.
 #
-# Usage: ./buildcaddy.bash $tag (Ex: v0.10.12)
+# Usage: ./buildcaddy.bash $tag (Ex: v0.10.14)
 # Assumes cwd is go/src/github.com/joshix/caddybox.
 
 tag=$1
