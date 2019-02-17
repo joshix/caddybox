@@ -19,4 +19,4 @@ if [ "$tag" != '' ]
     git checkout $tag
 fi
 go run build.go --goos linux --goarch amd64
-cp caddy ../../../joshix/caddybox/rootfs/bin/caddy
+cp caddy ../../../joshix/caddybox/rootfs/usr/local/bin/caddy
