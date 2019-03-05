@@ -26,7 +26,7 @@ rkt run --insecure-options=image \
 --mount volume=html,target=/var/www/html \
 --volume dotcaddy,kind=host,source=/home/core/dotcaddy,readOnly=false \
 --mount volume=dotcaddy,target=/root/.caddy \
-docker://quay.io/joshix/caddy:v0.11.4
+docker://quay.io/joshix/caddy:v0.11.5
 ```
 
 
