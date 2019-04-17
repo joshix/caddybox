@@ -1,6 +1,8 @@
 FROM scratch
-MAINTAINER Josh Wood <j@joshix.com>
+LABEL maintainer="Josh Wood <j@joshix.com>"
+LABEL caddy_version="1.0.0"
 COPY rootfs /
-EXPOSE 80 443 2015
+USER 65534:65534
+EXPOSE 8080
 WORKDIR /var/www/html
 ENTRYPOINT ["/bin/caddy"]

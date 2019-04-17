@@ -1,22 +1,23 @@
 #!/bin/bash
 
-# Builds caddy binary for caddybox rootfs using caddy's build.go.
+# Build caddy binary for caddybox using caddy's build.go.
 #
-# Usage: ./buildcaddy.bash $tag (Ex: v0.11.5)
-# Assumes cwd is go/src/github.com/joshix/caddybox.
+# Usage: ./buildcaddy.bash <git tag>
+# Assumes the path ../../mholt/caddy/ can be reached.
 
 tag=$1
 
-go get -u -v -d github.com/mholt/caddy
-go get -u -v github.com/caddyserver/builds
+GO111MODULE=on export GO111MODULE
+
 cd ../../mholt/caddy
 git checkout master
-cd caddy
-go clean
-go get -u -v -d
 if [ "$tag" != '' ]
   then
     git checkout $tag
 fi
-go run build.go --goos linux --goarch amd64
-cp caddy ../../../joshix/caddybox/rootfs/bin/caddy
+cd caddy
+go clean
+GOOS=linux GOARCH=amd64 go build
+cp ./caddy ../../../joshix/caddybox/rootfs/bin/caddy
+go clean
+git checkout master
