@@ -31,7 +31,7 @@ $ ls /home/j/site
   index.html
   img/
   [...]
-$ docker run -d -p 8080:2015 -v /home/j/site:/var/www/html:ro joshix/caddy
+$ docker run -d -p 8080:8080 -v /home/j/site:/var/www/html:ro joshix/caddy
 ```
 
 OR,
@@ -49,7 +49,7 @@ $ cat Dockerfile
   FROM joshix/caddy
   COPY . /var/www/html
 $ docker build -t "com.mysite-caddy" .
-$ docker run -d -p 8080:2015 com.mysite-caddy
+$ docker run -d -p 8080:8080 com.mysite-caddy
 ```
 
 ## Configuration
@@ -63,12 +63,12 @@ $ ls /home/j/site
   img/
   [...]
 $ cat /home/j/site/Caddyfile
-  0.0.0.0:2015
+  0.0.0.0:8080
   ext .html .htm .md
   markdown /
   gzip
   [...]
-$ docker run -d -p 8080:2015 -v /home/j/site:/var/www/html:ro joshix/caddy
+$ docker run -d -p 8080:8080 -v /home/j/site:/var/www/html:ro joshix/caddy
 ```
 
 ### Manual TLS
@@ -88,14 +88,14 @@ $ ls /home/j/site/tls
   site.crt
   site.key
 $ cat /home/j/site/html/Caddyfile
-  0.0.0.0:2015 {
+  0.0.0.0:8080 {
     redir https://site.com # Redirect any HTTP req to HTTPS
   }
-  0.0.0.0:2378 {
+  0.0.0.0:443 {
     tls ../tls/site.crt ../tls/site.key
   }
   [...]
-$ docker run -d -p 80:2015 -p 443:2378 -v /home/j/site:/var/www:ro joshix/caddy
+$ docker run -d -p 80:8080 -p 443:443 -v /home/j/site:/var/www:ro joshix/caddy
 ```
 
 ### Automatic *Let's Encrypt* TLS
