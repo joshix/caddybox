@@ -1,5 +1,7 @@
-0.0.0.0:8080 {
-  tls off
-  log stdout
-  errors stderr
+:8080 {
+	file_server {
+	}
+	log {
+		output stdout
+	}
 }

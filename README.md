@@ -2,7 +2,7 @@
 
 [![Container Image on Quay](https://quay.io/repository/joshix/caddy/status "Container Image on Quay")][quay-joshix-caddy]
 
-This container image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked binary absent any [*Addon* extensions][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
+This container image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a single statically-linked `caddy` binary absent any non-standard [modules][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any Docker host by invoking e.g., `docker run -d -P joshix/caddy`.
 
 By default this caddy listens on the container's `EXPOSE`d TCP port #8080 and attempts to fulfill requests with files beneath the container's `/var/www/html/`.
 
@@ -13,7 +13,6 @@ Content should be added by binding a host volume over that path, or by `COPY`ing
 The file hierarchy beneath `./rootfs/` is `COPY`'d to the container's empty `/`, resulting in this layout:
 
 * `/bin/caddy` - Server executable
-* `/etc/ssl/certs/ca-certificates.crt` - Certificate Authority certificates
 * `/var/www/html/` - Caddy working directory and root of HTTP name space
 * `/var/www/html/Caddyfile` - Default configuration
 * `/var/www/html/index.html` - Default landing page
@@ -25,11 +24,10 @@ There are at least two ways to provide Caddy with content and configuration.
 * Bind a host file system path over the container's HTTP name space root:
 
 ```sh
-$ ls /home/j/site
+$ ls site/html
   index.html
-  img/
   [...]
-$ docker run -d -p 8080:8080 -v /home/j/site:/var/www/html:ro joshix/caddy
+$ docker run -d -p 8080:8080 -v ./site:/var/www:ro joshix/caddy
 ```
 
 OR,
@@ -37,11 +35,10 @@ OR,
 * Build the files into an image based on this one:
 
 ```sh
-$ cd /home/j/site.build
+$ cd site/html
 $ ls
   Dockerfile
   index.html
-  img/logo.png
   [...]
 $ cat Dockerfile
   FROM joshix/caddy
@@ -55,18 +52,20 @@ $ docker run -d -p 8080:8080 com.mysite-caddy
 To configure Caddy, add `Caddyfile` to the server's working directory:
 
 ```sh
-$ ls /home/j/site
+$ ls site/html
   Caddyfile
   index.md
-  img/
   [...]
-$ cat /home/j/site/Caddyfile
-  0.0.0.0:8080
-  ext .html .htm .md
-  markdown /
-  gzip
+$ cat site/html/Caddyfile
+  :8080 {
+    file_server {
+    }
+    log {
+      output stdout
+    }
+  }
   [...]
-$ docker run -d -p 8080:8080 -v /home/j/site:/var/www/html:ro joshix/caddy
+$ docker run -d -p 8080:8080 -v ./site:/var/www:ro joshix/caddy
 ```
 
 ### Manual TLS
@@ -74,64 +73,54 @@ $ docker run -d -p 8080:8080 -v /home/j/site:/var/www/html:ro joshix/caddy
 To serve HTTPS, add certificate and key files, with a Caddyfile naming them:
 
 ```sh
-$ ls /home/j/site
+$ ls site
   html/
   tls/
-$ ls /home/j/site/html
+$ ls site/html
   Caddyfile
   index.html
-  img/
   [...]
-$ ls /home/j/site/tls
+$ ls site/tls
   site.crt
   site.key
-$ cat /home/j/site/html/Caddyfile
-  0.0.0.0:8080 {
-    redir https://site.com # Redirect any HTTP req to HTTPS
+$ cat site/html/Caddyfile
+  {
+    http_port 8080
   }
-  0.0.0.0:443 {
+  :8443 {
     tls ../tls/site.crt ../tls/site.key
+    file_server {
+    }
+    log {
+      output stdout
+    }
   }
   [...]
-$ docker run -d -p 80:8080 -p 443:443 -v /home/j/site:/var/www:ro joshix/caddy
+$ docker run -d -p 8080:8080 -p 8443:8443 -v ./site:/var/www:ro joshix/caddy
 ```
 
 ### Automatic *Let's Encrypt* TLS
 
-Caddy can [automatically acquire and renew TLS keys and certificates][caddyautotls] to secure connections using the *Let's Encrypt* project's ACME protocol.
+Caddy can [automatically acquire and renew TLS keys and certificates][caddyautotls] to secure connections using the *Let's Encrypt* project's ACME protocol. Because this container runs the `caddy` executable as an unprivileged user, it cannot bind privileged ports (port numbers < 1024) without further arrangement. This container is intended for use behind a container network like that provided by Docker or the Kubernetes CNI. Usually TLS termination would occur at the edge of the container host network rather than at the caddy HTTPd.
 
 #### Caddyfile Required
 
 Create a Caddyfile specifying, at minimum, a domain name resolving to the docker host that will arrange for such traffic to be handled by the running caddybox container, and the email address for registration with letsencrypt.
 
-```sh
-$ ls /home/j/site
-Caddyfile
-index.html
-$ cat /home/j/site/Caddyfile
-lecaddybox.wood-racing.com
-  tls j@joshix.com
-$ docker run --name com.wood-racing.lecaddybox -d \
--p 80:80 -p 443:443 \
--v /home/j/site:/var/www/html:ro \
--v /home/j/dotcaddy:/.caddy:rw \
-joshix/caddy -agree
-```
+## Building Caddy with xcaddy
 
-#### Persisting
-
-Certificates, keys, and configuration generated in the letsencrypt exchange are written to files beneath the container’s `/.caddy/letsencrypt/`. The example above arranges for that path to be a Docker *volume*, backing the container's `/.caddy/` with a host directory, `/home/j/dotcaddy/`.
-
-Alternatively, the letsencrypt artifacts can be copied out of the container file system with the `docker cp` command, e.g.:
+https://github.com/caddyserver/xcaddy
 
 ```sh
-docker cp com.wood-racing.lecaddybox:/.caddy /backup/dotcaddy
+cd /tmp/caddyboxbuild
+GOOS=linux GOARCH=amd64 xcaddy build v2.4.5
+file caddy
+cp caddy [...]/caddybox/rootfs/bin/caddy
 ```
 
-[caddons]: https://github.com/mholt/caddy/wiki/Extending-Caddy
+[caddons]: https://caddyserver.com/docs/modules/
 [caddy]: https://caddyserver.com
 [caddyautotls]: https://caddyserver.com/docs/automatic-https
 [caddydocs]: https://caddyserver.com/docs
-[microbadge]: https://microbadger.com/images/joshix/caddy
 [quay-joshix-caddy]: https://quay.io/repository/joshix/caddy
 [scratchimg]: https://hub.docker.com/_/scratch/
