@@ -109,11 +109,11 @@ Create a Caddyfile specifying, at minimum, a domain name resolving to the docker
 
 ## Building Caddy with xcaddy
 
-https://github.com/caddyserver/xcaddy
+<https://github.com/caddyserver/xcaddy>
 
 ```sh
 cd /tmp/caddyboxbuild
-GOOS=linux GOARCH=amd64 xcaddy build v2.4.5
+GOOS=linux GOARCH=amd64 xcaddy build v2.4.6
 file caddy
 cp caddy [...]/caddybox/rootfs/bin/caddy
 ```
