@@ -113,7 +113,7 @@ Create a Caddyfile specifying, at minimum, a domain name resolving to the docker
 
 ```sh
 cd /tmp/caddyboxbuild
-GOOS=linux GOARCH=amd64 xcaddy build v2.6.1
+GOOS=linux GOARCH=amd64 xcaddy build v2.6.2
 file caddy
 cp caddy [...]/caddybox/rootfs/bin/caddy
 ```

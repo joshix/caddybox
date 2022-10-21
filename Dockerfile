@@ -1,6 +1,6 @@
 FROM scratch
 LABEL maintainer="Josh Wood <j@joshix.com>"
-LABEL caddy_version="2.6.1"
+LABEL caddy_version="2.6.2"
 COPY rootfs /
 USER 65534:65534
 EXPOSE 8080
