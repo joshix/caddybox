@@ -117,7 +117,7 @@ Preserved for reference. The build is no longer done out-of-band and the caddy b
 
 ```sh
 cd /tmp/caddyboxbuild
-GOOS=linux GOARCH=amd64 xcaddy build v2.6.2
+GOOS=linux GOARCH=amd64 xcaddy build v2.6.3
 file caddy
 cp caddy [...]/caddybox/rootfs/bin/caddy
 ```
