@@ -107,7 +107,7 @@ Caddy can [automatically acquire and renew TLS keys and certificates][caddyautot
 
 Versions up to v2.6.2-cb.1 included a caddy binary built outside the container build process. While that is no longer true, and caddy is built in a multi-stage container build, this repo remains large with every previous version having a binary at `rootfs/bin/caddy`.
 
-Work around this with git's shallow clone. This fetches only the given number of revisions. For most new clones of this repo, that number should be 1. Something like `git clone --depth 1 --branch multistage https://github.com/joshix/caddybox` should require only a small download and disk allocation.
+Work around this with git's shallow clone. This fetches only the given number of revisions. For most new clones of this repo, that number should be 1. Something like `git clone --depth 1 https://github.com/joshix/caddybox` should require only a small download and disk allocation.
 
 ## Building Caddy with xcaddy
 
@@ -117,7 +117,7 @@ Preserved for reference. The build is no longer done out-of-band and the caddy b
 
 ```sh
 cd /tmp/caddyboxbuild
-GOOS=linux GOARCH=amd64 xcaddy build v2.6.3
+GOOS=linux GOARCH=amd64 xcaddy build v2.6.4
 file caddy
 cp caddy [...]/caddybox/rootfs/bin/caddy
 ```
