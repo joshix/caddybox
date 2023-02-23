@@ -1,4 +1,4 @@
-FROM golang:1.20.1 AS builder
+FROM golang:1.20 AS builder
 RUN mkdir /build
 WORKDIR /build
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@v0.3.2
