@@ -6,7 +6,7 @@ RUN GOOS=linux GOARCH=amd64 xcaddy build v2.6.4
 
 FROM scratch
 LABEL maintainer="Josh Wood <j@joshix.com>"
-LABEL caddy_version="2.6.4"
+LABEL caddy-version="2.6.4"
 COPY rootfs /
 COPY --from=builder /build/caddy /bin/caddy
 USER 65534:65534
