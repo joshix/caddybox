@@ -2,7 +2,7 @@
 
 [![Container Image on Quay](https://quay.io/repository/joshix/caddy/status "Container Image on Quay")][quay-joshix-caddy]
 
-This container image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a statically-linked `caddy` binary with no added [modules][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any container host by invoking e.g., `docker run -d -P joshix/caddy`.
+This container image encapsulates a [*Caddy*][caddy] HTTP server. It is built `FROM` the [*scratch* image][scratchimg] and executes a statically-linked `caddy` binary with no added [modules][caddons]. It includes a tiny `index.html` landing page so that it can be demonstrated without configuration on any container host by invoking e.g., `docker run -d -P quay.io/joshix/caddy`.
 
 By default this caddy listens on the container's `EXPOSE`d TCP port #8080 and attempts to fulfill requests with files beneath the container's `/var/www/html/`.
 
@@ -27,7 +27,7 @@ There are at least two ways to provide Caddy with content and configuration.
 $ ls site/html
   index.html
   [...]
-$ docker run -d -p 8080:8080 -v ./site:/var/www:ro joshix/caddy
+$ docker run -d -p 8080:8080 -v ./site:/var/www:ro quay.io/joshix/caddy
 ```
 
 OR,
@@ -41,7 +41,7 @@ $ ls
   index.html
   [...]
 $ cat Dockerfile
-  FROM joshix/caddy
+  FROM quay.io/joshix/caddy
   COPY . /var/www/html
 $ docker build -t "com.mysite-caddy" .
 $ docker run -d -p 8080:8080 com.mysite-caddy
@@ -65,7 +65,7 @@ $ cat site/html/Caddyfile
     }
   }
   [...]
-$ docker run -d -p 8080:8080 -v ./site:/var/www:ro joshix/caddy
+$ docker run -d -p 8080:8080 -v ./site:/var/www:ro quay.io/joshix/caddy
 ```
 
 ### Manual TLS
@@ -96,7 +96,7 @@ $ cat site/html/Caddyfile
     }
   }
   [...]
-$ docker run -d -p 8080:8080 -p 8443:8443 -v ./site:/var/www:ro joshix/caddy
+$ docker run -d -p 8080:8080 -p 8443:8443 -v ./site:/var/www:ro quay.io/joshix/caddy
 ```
 
 ### Automatic *Let's Encrypt* TLS
