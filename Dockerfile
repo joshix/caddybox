@@ -1,12 +1,12 @@
 FROM golang:1.20 AS builder
 RUN mkdir /build
 WORKDIR /build
-RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@v0.3.2
-RUN GOOS=linux GOARCH=amd64 xcaddy build v2.6.4
+RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@v0.3.4
+RUN xcaddy build v2.7.0-beta.1
 
 FROM scratch
 LABEL maintainer="Josh Wood <j@joshix.com>"
-LABEL caddy-version="2.6.4"
+LABEL caddy-version="2.7.0-beta.1"
 COPY rootfs /
 COPY --from=builder /build/caddy /bin/caddy
 USER 65534:65534
