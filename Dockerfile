@@ -9,7 +9,6 @@ LABEL maintainer="Josh Wood <j@joshix.com>"
 LABEL caddy-version="2.11.7"
 COPY rootfs /
 COPY --from=builder /build/caddy /bin/caddy
-USER 65534:65534
 EXPOSE 8080
 WORKDIR /var/www/html
 ENTRYPOINT ["/bin/caddy"]
